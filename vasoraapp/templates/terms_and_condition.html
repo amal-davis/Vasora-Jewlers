@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms and Services - Vasora Jewellers</title>
+    <link rel="stylesheet" href="{% static 'images/index.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'images/small_logo.png' %}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Post+No+Bills+Colombo:wght@400;700&display=swap" rel="stylesheet">    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+body {
+    padding-top: 70px; /* Adjust this value based on the actual height of your navbar */
+    background: linear-gradient(to left, #2b0000, #0f0000);
+    font-family: "Poppins", sans-serif;
+    color: #ffffff;
+}
+
+@media (max-width: 768px) {
+    body {
+        padding-top: 90px; /* Adjust this value based on the actual height of your navbar on mobile */
+    }
+}
+        .terms-section {
+            padding: 50px 15px;
+        }
+        .terms-section h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .terms-section p {
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+        .terms-section a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .terms-section a:hover {
+            text-decoration: underline;
+        }
+        h2{
+            font-size: 2.5rem;
+    font-weight: bold;
+    background: linear-gradient(to right, #FBD757    , #ffffff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 300;
+        }
+        h1{
+            font-size: 3rem;
+    font-weight: bold;
+    background: linear-gradient(to right, #FBD757    , #ffffff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 300;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: rgb(247, 242, 242);">
+        <a class="navbar-brand" href="/">
+            <img src="{% static 'images/vasora.png' %}" alt="Logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'about_us' %}">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'products' %}">Products</a>
+                </li>
+                <!-- Our Category Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="categoryDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Our Category
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="categoryDropdown">
+                        {% for category in categories %}
+                            <li><a class="dropdown-item" href="{% url 'category_products' category.id %}">{{ category.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'contact_us' %}">Contact Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link search-icon" href="#"><i class="fas fa-search"></i></a>
+                </li>
+                <!-- Profile Icon Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-user"></i>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+                        {% if user.is_authenticated %}
+                        <li><a class="dropdown-item" href="{% url 'user_orders' %}">Orders</a></li>
+                        <li><a class="dropdown-item" href="{% url 'wishlist' %}">wishlist</a></li>
+                            <li><a class="dropdown-item" href="{% url 'logout_view' %}">Logout</a></li>
+                        {% else %}
+                            <li><a class="dropdown-item" href="{% url 'login' %}">Login</a></li>
+                            <li><a class="dropdown-item" href="{% url 'signup' %}">Sign Up</a></li>
+                        {% endif %}
+                    </ul>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'cart' %}"><i class="fas fa-shopping-cart"></i></a>
+                </li>
+            </ul>
+            <form class="form-inline search-bar d-none ml-auto" action="{% url 'search_results' %}" method="GET">
+                <input class="form-control" name="q" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-secondary" type="submit"><i class="fas fa-search"></i></button>
+                <button class="btn btn-outline-secondary close-search" type="button"><i class="fas fa-times"></i></button>
+            </form>
+        </div>
+    </nav>
+<div class="container mt-5">
+    <div class="terms-section">
+        <h1 class="text-center">Terms and Services</h1>
+
+        <h2>Terms and Conditions</h2>
+        <p>For the purpose of these Terms and Conditions, The term "we", "us", "our" used anywhere on this page shall mean Vasora jewellers gold covering, whose registered/operational office is Kavil shopping complex Ernakulam KERALA 683563. "you", “your”, "user", “visitor” shall mean any natural or legal person who is visiting our website and/or agreed to purchase from us.</p>
+        <p>Your use of the website and/or purchase from us are governed by the following Terms and Conditions:</p>
+        <ul>
+            <li>The content of the pages of this website is subject to change without notice.</li>
+            <li>Neither we nor any third parties provide any warranty or guarantee as to the accuracy, timeliness, performance, completeness, or suitability of the information and materials found or offered on this website for any particular purpose. You acknowledge that such information and materials may contain inaccuracies or errors, and we expressly exclude liability for any such inaccuracies or errors to the fullest extent permitted by law.</li>
+            <li>Your use of any information or materials on our website and/or product pages is entirely at your own risk, for which we shall not be liable. It shall be your own responsibility to ensure that any products, services, or information available through our website and/or product pages meet your specific requirements.</li>
+            <li>Our website contains material that is owned by or licensed to us. This material includes, but is not limited to, the design, layout, look, appearance, and graphics. Reproduction is prohibited other than in accordance with the copyright notice, which forms part of these terms and conditions.</li>
+            <li>All trademarks reproduced on our website which are not the property of, or licensed to, the operator are acknowledged on the website.</li>
+            <li>Unauthorized use of information provided by us shall give rise to a claim for damages and/or be a criminal offense.</li>
+            <li>From time to time, our website may also include links to other websites. These links are provided for your convenience to provide further information.</li>
+            <li>You may not create a link to our website from another website or document without Vasora Jewellers Gold Covering’s prior written consent.</li>
+            <li>Any dispute arising out of the use of our website and/or purchase with us and/or any engagement with us is subject to the laws of India.</li>
+            <li>We shall be under no liability whatsoever in respect of any loss or damage arising directly or indirectly out of the decline of authorization for any Transaction, on Account of the Cardholder having exceeded the preset limit mutually agreed by us with our acquiring bank from time to time.</li>
+        </ul>
+
+        <h2>Cancellation and Refund Policy</h2>
+        <p>Last updated on Aug 21 2024</p>
+        <p>Vasora Jewellers Gold Covering believes in helping its customers as far as possible and therefore has a liberal cancellation policy. Under this policy:</p>
+        <ul>
+            <li>Cancellations will be considered only if the request is made within 2 days of placing the order. However, the cancellation request may not be entertained if the orders have been communicated to the vendors/merchants and they have initiated the process of shipping them.</li>
+            <li>Vasora Jewellers Gold Covering does not accept cancellation requests for perishable items like flowers, eatables, etc. However, a refund/replacement can be made if the customer establishes that the quality of the product delivered is not good.</li>
+            <li>In case of receipt of damaged or defective items, please report the same to our Customer Service team. The request will, however, be entertained once the merchant has checked and determined the same at his own end. This should be reported within 2 days of receipt of the products.</li>
+            <li>In case you feel that the product received is not as shown on the site or as per your expectations, you must bring it to the notice of our customer service within 2 days of receiving the product. The Customer Service Team after looking into your complaint will take an appropriate decision.</li>
+            <li>In case of complaints regarding products that come with a warranty from manufacturers, please refer the issue to them.</li>
+            <li>In case of any refunds approved by Vasora Jewellers Gold Covering, it will take 6-8 days for the refund to be processed to the end customer.</li>
+        </ul>
+        <p>For more details, please refer to our detailed <a href="https://merchant.razorpay.com/policy/OkN0MhalgEvmYJ/refund" target="_blank">Refund Policy</a>.</p>
+
+        <h2>Shipping and Delivery Policy</h2>
+        <p>Last updated on Aug 21 2024</p>
+        <p>For International buyers, orders are shipped and delivered through registered international courier companies and/or International speed post only. For domestic buyers, orders are shipped through registered domestic courier companies and/or speed post only. Orders are shipped within 8-14 days or as per the delivery date agreed at the time of order confirmation and delivering of the shipment subject to Courier Company / post office norms.</p>
+        <ul>
+            <li>Vasora Jewellers Gold Covering is not liable for any delay in delivery by the courier company / postal authorities and only guarantees to hand over the consignment to the courier company or postal authorities within 8-14 days from the date of the order and payment or as per the delivery date agreed at the time of order confirmation.</li>
+            <li>Delivery of all orders will be to the address provided by the buyer.</li>
+            <li>Delivery of our services will be confirmed on your mail ID as specified during registration.</li>
+            <li>For any issues in utilizing our services, you may contact our helpdesk at 9633249399.</li>
+        </ul>
+        <p>For more details, please refer to our detailed <a href="https://merchant.razorpay.com/policy/OkN0MhalgEvmYJ/shipping" target="_blank">Shipping and Delivery Policy</a>.</p>
+    </div>
+</div>
+
+<footer class="footer-section mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 pt-5 footer-logo">
+                <img src="{% static 'images/footer.png' %}" alt="Logo">
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-pinterest"></i></a>
+                </div>
+            </div>
+            <div class="col-md-3 pt-5 footer-links">
+                    <div class="links">
+                        <a href="/">Home</a>
+                        <a href="#">About us</a>
+                        <a href="{% url 'products' %}">Products</a>
+                        <a href="{% url 'contact_us' %}">Contact Us</a>
+                        <a href="{% url 'trending_products' %}">Trending Products</a>
+                        <a href="{% url 'terms_and_condition' %}">Terms and Condition</a>
+                    </div>
+                    
+                </div>
+                <div class="col-md-3 pt-5 footer-links">
+                    <div class="links">
+                        {% for category in categories %}
+                            <a href="{% url 'category_products' category.id %}">{{ category.name }}</a>
+                        {% endfor %}
+                    </div>
+                    
+                    
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © 2024 Vasora Jewellers by Shop
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+$('.search-icon').click(function() {
+   $('.navbar-nav').addClass('d-none');  // Hide the navbar links
+   $('.search-bar').removeClass('d-none');  // Show the search bar
+});
+
+$('.close-search').click(function() {
+   $('.search-bar').addClass('d-none');  // Hide the search bar
+   $('.navbar-nav').removeClass('d-none');  // Show the navbar links
+});
+});
+</script>
+</body>
+</html>

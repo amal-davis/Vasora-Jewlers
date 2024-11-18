@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+    <link rel="stylesheet" href="{% static 'images/index.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'images/small_logo.png' %}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Post+No+Bills+Colombo:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+body {
+    padding-top: 70px; /* Adjust this value based on the actual height of your navbar */
+    background: linear-gradient(to left, #2b0000, #0f0000);
+    font-family: "Poppins", sans-serif;
+}
+
+@media (max-width: 768px) {
+    body {
+        padding-top: 90px; /* Adjust this value based on the actual height of your navbar on mobile */
+    }
+}
+
+
+
+.product-heading {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #FFFFFF;
+}
+
+.rating-sku {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 1rem;
+    color: #ffcc00;
+}
+
+.divider {
+    border-top: 1px solid #FFFFFF;
+    margin: 10px 0;
+}
+
+.product-description p {
+    margin-bottom: 20px;
+    font-size: 1rem;
+}
+.product-description * {
+    color: #FFFFFF !important;
+}
+
+
+.price-section {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+.discount-price {
+    color: #FBD757;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.original-price {
+    color: #ffcc00;
+    text-decoration: line-through;
+}
+
+.btn-whatsapp {
+    background-color: #FBD757;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.quantity-cart-buy {
+    display: flex;
+    align-items: center;
+}
+
+.quantity-input {
+    width: 60px;
+    padding: 5px;
+    margin-right: 10px;
+    text-align: center;
+}
+
+.btn-cart {
+    background-color: #ffcc00;
+    color: black;
+    padding: 10px 20px;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
+.btn-buy {
+    background-color: transparent;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border:  2px solid #FFFFFF;
+}
+
+.info-section {
+    border: 1px solid #333;
+    padding: 15px;
+    background-color: #222;
+    color: white;
+    border-radius: 5px;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.info-item i {
+    font-size: 1.2rem;
+    margin-right: 10px;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.action-buttons .btn-outline-secondary {
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: white;
+    border: 1px solid #fff;
+    background-color: transparent;
+}
+@media (max-width: 768px) {
+    .action-buttons {
+        flex-direction: column;
+        gap: 10px; /* Adjust the gap between buttons for smaller screens */
+    }
+
+    .action-buttons .btn-outline-secondary {
+        padding: 10px;
+        flex: none; /* Allow buttons to stack vertically without stretching */
+    }
+}
+.item.active img {
+    border: 2px solid #007bff; /* Highlight the active thumbnail */
+}
+.slider-sections {
+            position: relative;
+            margin-top: 10px;
+            padding: 20px 0;
+        }
+        .slider-sections h2 {
+        font-size: 3rem;
+    font-weight: bold;
+    background: linear-gradient(to right, #FBD757    , #ffffff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 300;
+        }
+        .slider {
+            display: flex;
+            overflow: hidden;
+            position: relative;
+        }
+        .slide {
+            flex: 0 0 25%;
+            max-width: 25%;
+            box-sizing: border-box;
+            padding: 0 10px;
+            text-align: center;
+        }
+        .slide img {
+            width: 100%;
+            border-radius: 10px;
+        }
+        .slide h5 {
+            color: #FBD757;
+            margin-top: 10px;
+        }
+        .arrows {
+            position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.5rem; /* Adjust the size of the arrow */
+    background: rgba(58, 54, 54, 0.8); /* Set a dark background */
+    color: white; /* Set arrow color */
+    border: 2px solid white; /* Add a white border */
+    border-radius: 50%; /* Make the button circular */
+    width: 40px; /* Set the width */
+    height: 40px; /* Set the height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+        }
+       
+        .arrows.right {
+            right: 205px;
+        }
+        @media (max-width: 992px) {
+            .slide {
+                flex: 0 0 33.33%;
+                max-width: 33.33%;
+            }
+        }
+        @media (max-width: 768px) {
+            .slide {
+                flex: 0 0 50%;
+                max-width: 50%;
+            }
+        }
+        @media (max-width: 576px) {
+            .slide {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+        }
+        .product-card {
+            background-color: transparent;
+            border: none;
+            color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+        .product-card img {
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            width: 100%;
+        }
+        .product-card .card-body {
+            padding: 15px;
+        }
+        .product-card .card-title {
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+        .product-card .card-text {
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        .product-card .old-price {
+            text-decoration: line-through;
+            color: #ccc;
+            margin-right: 5px;
+        }
+        .product-card .price {
+            font-size: 1.2rem;
+            color: #FBD757;
+        }
+        .product-card .cart-icon {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            background-color: transparent;
+            border: 2px solid #FBD757;
+            border-radius: 50%;
+            padding: 10px;
+            color: #FBD757;
+            cursor: pointer;
+        }
+        .product-card .wishlist-icon {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            color: #FBD757;
+            cursor: pointer;
+        }
+        .custom-prev-btn, .custom-next-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: transparent;
+    border: 2px solid white;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    z-index: 10;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.custom-prev-btn {
+    left: 50px;
+}
+
+.custom-next-btn {
+    right: 50px;
+}
+
+.custom-prev-btn:hover, .custom-next-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.custom-prev-btn i, .custom-next-btn i {
+    font-size: 1.5rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .custom-prev-btn, .custom-next-btn {
+       display: none;
+    }
+    /* .container {
+        text-align: center;
+    } */
+}
+.hero-section {
+    background-image: url("{% static 'images/hero_images.png' %}");
+    background-size: cover;
+    background-position: center;
+    height: 50vh;
+    position: relative;
+}
+.hero-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3); /* Dark overlay */
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    color: white;
+}
+
+.hero-heading {
+    font-size: 3rem;
+    font-weight: bold;
+    background: linear-gradient(to right, #FBD757    , #ffffff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 300;
+}
+
+.btn-outline-light {
+    border-color: white;
+    color: white;
+    padding: 10px 20px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-outline-light:hover {
+    background-color: white;
+    color: black;
+}
+
+@media (max-width: 768px) {
+    .hero-heading {
+        font-size: 2rem;
+    }
+}
+.modal-body a.btn {
+    margin: 10px;
+    width: 80%;
+    display: inline-block;
+    text-align: center;
+    font-size: 1.2rem;
+    
+}
+
+.modal-body #copyLink {
+    margin-top: 20px;
+}
+.share-icon {
+    width: 50px;  /* Ensure width and height are the same for a circle */
+    height: 50px;
+    border-radius: 50%;  /* Make the shape a circle */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+    font-size: 1.5rem;  /* Adjust icon size */
+    color: white;  /* Text color */
+    transition: background-color 0.3s ease;
+    padding: 0;  /* Remove padding */
+}
+
+.share-icon i {
+    margin: 0;  /* Remove any default margin */
+}
+
+.share-icon.btn-primary {
+    background-color: #3b5998;  /* Facebook blue */
+    border: none;
+}
+
+.share-icon.btn-success {
+    background-color: #25D366;  /* WhatsApp green */
+    border: none;
+}
+
+.share-icon.btn-danger {
+    background-color: #E1306C;  /* Instagram pink */
+    border: none;
+}
+
+.share-icon.btn-secondary {
+    background-color: #333;  /* Dark color for copy link */
+    border: none;
+}
+
+.share-icon:hover {
+    opacity: 0.8;  /* Slightly darken on hover */
+}
+a{
+    text-decoration: none;
+}
+.modal-title{
+    font-size: 2rem;
+    font-weight: bold;
+    background: linear-gradient(to right, #FBD757    , #ffffff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 300;   
+}
+@media (max-width: 768px) {
+    .modal-title{
+        font-size: 1.5rem;
+    }
+}
+
+/* Change the color of the close button to white */
+.modal-header .btn-close {
+    background-color: transparent;
+    border: none;
+    color: white; /* Change the color of the close button icon */
+    opacity: 1; /* Ensure the icon is fully visible */
+}
+
+.modal-header .btn-close:hover {
+    color: #ccc; /* Optionally change color on hover */
+}
+
+</style>
+<body>
+   
+    
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: rgb(247, 242, 242);">
+        <a class="navbar-brand" href="/">
+            <img src="{% static 'images/vasora 1.png' %}" alt="Logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'about_us' %}">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'products' %}">Products</a>
+                </li>
+                <!-- Our Category Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="categoryDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Our Category
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="categoryDropdown">
+                        {% for category in categories %}
+                            <li><a class="dropdown-item" href="{% url 'category_products' category.id %}">{{ category.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'contact_us' %}">Contact Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link search-icon" href="#"><i class="fas fa-search"></i></a>
+                </li>
+                <!-- Profile Icon Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-user"></i>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+                        {% if user.is_authenticated %}
+                        <li><a class="dropdown-item" href="{% url 'user_orders' %}">Orders</a></li>
+                        <li><a class="dropdown-item" href="{% url 'wishlist' %}">wishlist</a></li>
+                            <li><a class="dropdown-item" href="{% url 'logout_view' %}">Logout</a></li>
+                        {% else %}
+                            <li><a class="dropdown-item" href="{% url 'login' %}">Login</a></li>
+                            <li><a class="dropdown-item" href="{% url 'signup' %}">Sign Up</a></li>
+                        {% endif %}
+                    </ul>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'cart' %}"><i class="fas fa-shopping-cart"></i></a>
+                </li>
+            </ul>
+            <form class="form-inline search-bar d-none ml-auto" action="{% url 'search_results' %}" method="GET">
+                <input class="form-control" name="q" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-secondary" type="submit"><i class="fas fa-search"></i></button>
+                <button class="btn btn-outline-secondary close-search" type="button"><i class="fas fa-times"></i></button>
+            </form>
+        </div>
+    </nav>
+    
+    
+
+    <div class="container" style="margin-top: 90px;">
+        <div class="row">
+            <!-- Left Column: Product Image -->
+            <div class="col-lg-6 pt-5">
+                <div class="container product-sliders">
+                    <!-- Main Carousel for large product images -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div id="main-carousel" class="owl-carousel owl-theme">
+                                {% if product.images.all %}
+    {% for image in product.images.all %}
+        <div class="item">
+            <img src="{{ image.image.url }}" class="main-image img-fluid" alt="{{ product.heading }}">
+        </div>
+    {% endfor %}
+{% else %}
+    <div class="item">
+        <div class="no-image" style="width: 100px; height: auto; text-align: center;">No Image</div>
+    </div>
+{% endif %}
+
+                            </div>
+                        </div>
+                    </div>
+                
+                    <!-- Thumbnail Carousel for navigation -->
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <div id="thumb-carousel" class="owl-carousel thumbnails">
+                                {% if product.images.all %}
+                                {% for image in product.images.all %}
+                                    <div class="item">
+                                        <img src="{{ image.image.url }}" class="thumbnail img-fluid" alt="{{ product.heading }}">
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <div class="item">
+                                    <div class="no-image" style="width: 100px; height: auto; text-align: center;">No Image</div>
+                                </div>
+                            {% endif %}
+                            
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Right Column: Product Details -->
+            <div class="col-lg-6 pt-5">
+                <!-- Product Heading -->
+                <h1 class="product-heading">{{ product.heading }}</h1>
+            
+                <!-- Star Rating and SKU -->
+                <div class="rating-sku">
+                    <span class="rating">★★★☆☆ 3.00</span>
+                    <span class="sku">SKU: {{ product.slug }}</span>
+                </div>
+            
+                <!-- Divider Line -->
+                <hr class="divider">
+            
+                <!-- Product Description -->
+                <div class="product-description">
+                    <p>
+                        {{ product.description|safe }}
+                    </p>
+                </div>
+            
+                <!-- Price Section -->
+                <div class="price-section">
+                    {% if product.discount_price %}
+                        <span class="discount-price">₹{{ product.discount_price }}</span>
+                        <span class="original-price">₹{{ product.original_price }}</span>
+                    {% else %}
+                        <span class="price">₹{{ product.original_price }}</span>
+                    {% endif %}
+                </div>
+            
+                <!-- Order on WhatsApp Button -->
+                {% if product.stock > 0 %}
+                <a href="https://api.whatsapp.com/send?phone=+917025306368&text=I want to order {{ product.heading }} for ₹{% if product.discount_price %}{{ product.discount_price }}{% else %}{{ product.original_price }}{% endif %}" class="btn btn-whatsapp">Order on WhatsApp</a>
+            {% else %}
+                <a href="#" class="btn btn-whatsapp disabled" aria-disabled="true">Out of Stock</a>
+            {% endif %}
+                        
+                <!-- Quantity Input and Add to Cart/Buy Now Buttons -->
+                <form action="{% url 'add_to_cart' product.id %}" method="POST">
+                    {% csrf_token %}
+                    <div class="quantity-cart-buy mt-3">
+                        {% if product.stock > 0 %}
+                            <input type="number" name="quantity" value="1" min="1" class="quantity-input">
+                            <button type="submit" class="btn btn-cart">Add to Cart</button>
+                            <!-- Buy Now Button -->
+                            <button type="submit" class="btn btn-buy">Buy Now</button>
+                        {% else %}
+                            <p class="out-of-stock-text" style="color: red;">Out of Stock</p>
+                        {% endif %}
+                    </div>
+                </form>
+                
+            
+                <!-- Payment and Warranty Information -->
+                <div class="info-section mt-4">
+                    <div class="info-item">
+                        <i class="fas fa-credit-card"></i>
+                        <span>Payment: Payment upon receipt of goods, Payment by card in the department, Google Pay, Online card, -5% discount in case of payment</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Warranty: The Consumer Protection Act does not provide for the return of this product of proper quality.</span>
+                    </div>
+                </div>
+            
+                <!-- Wishlist, Share, and Compare Buttons -->
+                <div class="action-buttons mt-4">
+                    <form action="{% url 'add_to_wishlist' product.id %}" method="POST" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-secondary">
+                            <i class="fas fa-heart"></i> Add to Wishlist
+                        </button>
+                    </form>
+                    
+                    <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#shareModal">
+                        <i class="fas fa-share-alt"></i> Share this Product
+                    </button>   
+<!-- Modal Structure -->
+<div class="modal fade" id="shareModal" tabindex="-1" aria-labelledby="shareModalLabel" aria-hidden="true" >
+    <div class="modal-dialog">
+      <div class="modal-content" style="background: linear-gradient(to left, #2b0000, #0f0000);">
+        <div class="modal-header">
+          <h5 class="modal-title" id="shareModalLabel">Share This Product</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+        </div>
+        <div class="modal-body text-center">
+          <!-- Social Media Icons -->
+          <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank" class="share-icon btn-primary">
+              <i class="fab fa-facebook-f"></i>
+          </a>
+          <a href="https://api.whatsapp.com/send?text={{ request.build_absolute_uri }}" target="_blank" class="share-icon btn-success">
+              <i class="fab fa-whatsapp"></i>
+          </a>
+          <a href="https://www.instagram.com/?url={{ request.build_absolute_uri }}" target="_blank" class="share-icon btn-danger">
+              <i class="fab fa-instagram"></i>
+          </a>
+          <button id="copyLink" class="share-icon btn-secondary">
+              <i class="fas fa-copy"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+                
+                     <button class="btn btn-outline-secondary"><i class="fas fa-exchange-alt"></i> Compare</button>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    
+    
+
+    <section class="slider-sections">
+        <div class="container">
+            <h2 style="color: #FBD757;" class="mt-5">Explore more</h2>
+            <div class="owl-carousel owl-theme mt-5" id="product-carousels">
+                {% for related_product in related_products %}
+                <div class="item">
+                    <div class="card product-card">
+                        <a href="{% url 'product_details' related_product.slug %}">
+                            {% if related_product.images.first %}
+                            <img src="{{ related_product.images.first.image.url }}" class="card-img-top" alt="{{ related_product.heading }}">
+                        {% else %}
+                            <div class="no-image" style="width: 100%; height: auto; text-align: center; padding: 10px; background-color: #f8f8f8; border: 1px solid #ddd;">
+                                No Image
+                            </div>
+                        {% endif %}
+                                                </a>
+                        <div class="card-body">
+                            <a href="{% url 'product_details' related_product.slug %}" style="color: #FFFFFF; text-decoration: none;">
+                                <h5 class="card-title">{{ related_product.heading }}</h5>
+                            </a>
+                            <p class="card-text">
+                                {% if related_product.discount_price %}
+                                    <span class="old-price">₹{{ related_product.original_price }}</span>
+                                    <span class="price">₹{{ related_product.discount_price }}</span>
+                                {% else %}
+                                    <span class="price">₹{{ related_product.original_price }}</span>
+                                {% endif %}
+                            </p>
+                            <div class="wishlist-icon">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <div class="cart-icon" data-id="{{ related_product.id }}">
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <button class="custom-prev-btn"><i class="fas fa-chevron-left"></i></button>
+            <button class="custom-next-btn"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </section>
+    
+    <section class="hero-section d-flex align-items-center justify-content-center text-center">
+        <div class="hero-content">
+            <h1 class="hero-heading">Trending Products</h1>
+            <a href="{% url 'trending_products' %}" class="btn btn-outline-light mt-3">DISCOVER NOW</a>
+        </div>
+    </section>
+
+    <footer class="footer-section mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 pt-5 footer-logo">
+                    <img src="{% static 'images/footer.png' %}" alt="Logo">
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-3 pt-5 footer-links">
+                        <div class="links">
+                            <a href="/">Home</a>
+                            <a href="#">About us</a>
+                            <a href="{% url 'products' %}">Products</a>
+                            <a href="{% url 'contact_us' %}">Contact Us</a>
+                            <a href="{% url 'trending_products' %}">Trending Products</a>
+                            <a href="{% url 'terms_and_condition' %}">Terms and Condition</a>
+                        </div>
+                        
+                    </div>
+                    <div class="col-md-3 pt-5 footer-links">
+                        <div class="links">
+                            {% for category in categories %}
+                                <a href="{% url 'category_products' category.id %}">{{ category.name }}</a>
+                            {% endfor %}
+                        </div>
+                        
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                © 2024 Vasora Jewellers by Shop
+            </div>
+        </div>
+    </footer>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<script>
+document.getElementById('copyLink').addEventListener('click', function() {
+    const link = "{{ request.build_absolute_uri }}";
+    navigator.clipboard.writeText(link).then(function() {
+        alert('Link copied to clipboard');
+    }, function(err) {
+        alert('Failed to copy link');
+    });
+});
+
+
+var mainCarousel = $('#main-carousel');
+var thumbCarousel = $('#thumb-carousel');
+            
+                mainCarousel.owlCarousel({
+                    items: 1,
+                    nav: false,
+                    dots: false,
+                    loop: false,
+                    autoplay: false,
+                    onChanged: syncPosition
+                });
+            
+                thumbCarousel.owlCarousel({
+                    items: 3,
+                    margin: 10,
+                    nav: false,
+                    dots: false,
+                    center: true,
+                    loop: false,
+                    responsive: {
+                        0: {
+                            items: 2
+                        },
+                        600: {
+                            items: 2
+                        },
+                        1000: {
+                            items: 5
+                        }
+                    }
+                });
+            
+                function syncPosition(event) {
+                    var index = event.item.index;
+                    thumbCarousel
+                        .find(".owl-item")
+                        .removeClass("active-thumbnail")
+                        .eq(index)
+                        .addClass("active-thumbnail");
+                    var onscreen = thumbCarousel.find('.owl-item.active').length - 1;
+                    var start = thumbCarousel.find('.owl-item.active').first().index();
+                    var end = thumbCarousel.find('.owl-item.active').last().index();
+            
+                    if (index > end) {
+                        thumbCarousel.trigger('to.owl.carousel', [index - onscreen, 300, true]);
+                    }
+                    if (index < start) {
+                        thumbCarousel.trigger('to.owl.carousel', [index - 1, 300, true]);
+                    }
+                }
+            
+                thumbCarousel.on('click', '.owl-item', function (e) {
+                    e.preventDefault();
+                    var index = $(this).index();
+                    mainCarousel.trigger('to.owl.carousel', [index, 300, true]);
+                });
+            
+                thumbCarousel.on('changed.owl.carousel', function (event) {
+                    var index = event.item.index;
+                    mainCarousel.trigger('to.owl.carousel', [index, 300, true]);
+                });
+
+
+$(document).ready(function(){
+  $("#product-carousels").owlCarousel({
+      margin: 20,
+      loop: false,
+      nav: false,
+      autoplay: true, 
+      autoplayTimeout: 3000,
+      responsive: {
+        0: {
+            items: 2
+        },
+        576: {
+            items: 2
+        },
+        992: {
+            items: 3
+        }
+      }
+  });
+
+  $('.custom-next-btn').click(function() {
+      $("#product-carousels").trigger('next.owl.carousel');
+  });
+
+  $('.custom-prev-btn').click(function() {
+      $("#product-carousels").trigger('prev.owl.carousel');
+  });
+});
+
+
+$(document).ready(function() {
+    $('.search-icon').click(function() {
+        $('.navbar-nav').addClass('d-none');  // Hide the navbar links
+        $('.search-bar').removeClass('d-none');  // Show the search bar
+    });
+
+    $('.close-search').click(function() {
+        $('.search-bar').addClass('d-none');  // Hide the search bar
+        $('.navbar-nav').removeClass('d-none');  // Show the navbar links
+    });
+});
+
+</script>
+
+</body>
+</html>

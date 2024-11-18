@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Page</title>
+    <link rel="stylesheet" href="{% static 'images/index.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'images/small_logo.png' %}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Post+No+Bills+Colombo:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+body {
+    padding-top: 70px; /* Adjust this value based on the actual height of your navbar */
+    background: linear-gradient(to left, #2b0000, #0f0000);
+    font-family: "Poppins", sans-serif;
+}
+
+@media (max-width: 768px) {
+    body {
+        padding-top: 90px; /* Adjust this value based on the actual height of your navbar on mobile */
+    }
+}
+/* Container */
+.user-orders {
+    color: #fff; /* Text color */
+}
+
+/* Card Styling */
+.card {
+    background-color: transparent;
+    border: 1px solid #FFCC00; /* Border color */
+    color: #fff;
+    padding: 15px;
+}
+
+/* Order ID and Date */
+.order-id {
+    font-weight: bold;
+    color: #FFCC00;
+}
+
+.order-date {
+    color: #FFCC00;
+}
+
+/* Product List */
+.product-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.product-list li {
+    margin-bottom: 5px;
+    color: #fff;
+}
+
+/* Order Total and Status */
+.order-total {
+    font-weight: bold;
+    color: #FFCC00;
+}
+
+.order-status {
+    font-weight: bold;
+    color: #fff;
+}
+
+/* Additional Responsive Adjustments */
+@media (max-width: 768px) {
+    .order-total, .order-status {
+        text-align: left;
+    }
+}
+/* Product Item Styling */
+.product-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+/* Product Image Styling */
+.product-image {
+    width: 60px;  /* Set the desired width for the product images */
+    height: 60px; /* Set the desired height for the product images */
+    object-fit: cover; /* Ensure the image covers the full area */
+    border-radius: 5px; /* Add rounded corners to the image */
+    margin-right: 10px; /* Add space between image and text */
+}
+
+/* Adjustments for Smaller Screens */
+@media (max-width: 768px) {
+    .product-image {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+.order_heading{
+    font-size: 3rem;
+    font-weight: bold;
+    background: linear-gradient(to right, #FBD757    , #ffffff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 300;
+}
+@media (max-width: 768px) {
+    .order_heading{
+        font-size: 2rem;
+    }
+}
+.pagination .page-link {
+        color: #FBD757; /* Yellow text color */
+        background-color: transparent; /* Transparent background */
+        border: 1px solid #FBD757; /* Yellow border */
+    }
+
+    .pagination .page-link:hover {
+        background-color: #FBD757; /* Yellow background on hover */
+        color: black; /* Black text on hover */
+    }
+
+    .pagination .page-item.active .page-link {
+        background-color: #FBD757; /* Yellow background for active page */
+        border-color: #FBD757; /* Yellow border for active page */
+        color: black; /* Black text for active page */
+    }
+
+    .pagination .page-item.disabled .page-link {
+        color: #ccc; /* Grey text for disabled buttons */
+        background-color: transparent;
+        border-color: #FBD757;
+    }
+</style>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: rgb(247, 242, 242);">
+        <a class="navbar-brand" href="/">
+            <img src="{% static 'images/vasora 1.png' %}" alt="Logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'about_us' %}">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'products' %}">Products</a>
+                </li>
+                <!-- Our Category Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="categoryDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Our Category
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="categoryDropdown">
+                        {% for category in categories %}
+                            <li><a class="dropdown-item" href="{% url 'category_products' category.id %}">{{ category.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'contact_us' %}">Contact Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link search-icon" href="#"><i class="fas fa-search"></i></a>
+                </li>
+                <!-- Profile Icon Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-user"></i>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+                        {% if user.is_authenticated %}
+                        <li><a class="dropdown-item" href="{% url 'user_orders' %}">Orders</a></li>
+                        <li><a class="dropdown-item" href="{% url 'wishlist' %}">wishlist</a></li>
+                            <li><a class="dropdown-item" href="{% url 'logout_view' %}">Logout</a></li>
+                        {% else %}
+                            <li><a class="dropdown-item" href="{% url 'login' %}">Login</a></li>
+                            <li><a class="dropdown-item" href="{% url 'signup' %}">Sign Up</a></li>
+                        {% endif %}
+                    </ul>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'cart' %}"><i class="fas fa-shopping-cart"></i></a>
+                </li>
+            </ul>
+            <form class="form-inline search-bar d-none ml-auto" action="{% url 'search_results' %}" method="GET">
+                <input class="form-control" name="q" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-secondary" type="submit"><i class="fas fa-search"></i></button>
+                <button class="btn btn-outline-secondary close-search" type="button"><i class="fas fa-times"></i></button>
+            </form>
+        </div>
+    </nav>
+
+    <div class="container user-orders" style="margin-top: 140px;">
+        <h2 class="mb-4 order_heading">My Orders</h2>
+        {% for order in page_obj %}
+        <div class="card p-3 mb-3">
+            <div class="row">
+                <div class="col-md-3">
+                    <h5 class="order-id">Order #{{ order.id }}</h5>
+                    <p class="order-date">{{ order.created_at|date:"d M Y" }}</p>
+                </div>
+                <div class="col-md-6">
+                    <h5 class="product-title">Products:</h5>
+                    <ul class="product-list">
+                        {% for item in order.items.all %}
+                        <li class="product-item">
+                            {% if item.product.images.first %}
+                            <img src="{{ item.product.images.first.image.url }}" alt="{{ item.product.heading }}" class="img-fluid product-image">
+                        {% else %}
+                            <div class="no-image" style="width: 100%; height: auto; text-align: center; padding: 10px; background-color: #f8f8f8; border: 1px solid #ddd;">
+                                No Image
+                            </div>
+                        {% endif %}
+                                                    <span>{{ item.quantity }} x {{ item.product.heading }}</span> - ₹{{ item.price }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="col-md-3 text-right">
+                    <p class="order-total"><strong>Total:</strong> ₹{{ order.subtotal }}</p>
+                    <p class="order-status"><strong>Status:</strong> {{ order.status }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+        <nav aria-label="Page navigation mt-5">
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </span>
+                    </li>
+                {% endif %}
+    
+                {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                        <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                    {% else %}
+                        <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                    {% endif %}
+                {% endfor %}
+    
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </span>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+    
+    
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+                $(document).ready(function() {
+   $('.search-icon').click(function() {
+       $('.navbar-nav').addClass('d-none');  // Hide the navbar links
+       $('.search-bar').removeClass('d-none');  // Show the search bar
+   });
+
+   $('.close-search').click(function() {
+       $('.search-bar').addClass('d-none');  // Hide the search bar
+       $('.navbar-nav').removeClass('d-none');  // Show the navbar links
+   });
+});
+    </script>
+</body>
+</html>

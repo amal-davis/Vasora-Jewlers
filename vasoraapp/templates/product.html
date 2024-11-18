@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+    <link rel="stylesheet" href="{% static 'images/index.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'images/small_logo.png' %}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Post+No+Bills+Colombo:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+    body {
+    padding-top: 70px; /* Adjust this value based on the actual height of your navbar */
+}
+
+@media (max-width: 768px) {
+    body {
+        padding-top: 90px; /* Adjust this value based on the actual height of your navbar on mobile */
+    }
+}
+
+
+    body{
+        background: linear-gradient(to left, #2b0000, #0f0000);
+        font-family: "Poppins", sans-serif;
+
+    }
+@media (max-width: 768px) {
+    .product-card {
+        margin-bottom: 20px; /* Adds space between cards */
+    }
+}
+.product-card {
+    background-color: transparent;
+    border: none;
+    color: white;
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+}
+
+.product-card .image-container {
+    position: relative; /* Ensure proper positioning for wishlist icon */
+}
+
+.product-card img {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    width: 100%;
+}
+
+.product-card .wishlist-icon {
+    position: absolute;
+    top: 10px; /* Position it at the top of the image */
+    right: 10px; /* Align it to the right within the image */
+    color: #FBD757;
+    cursor: pointer;
+    font-size: 20px; /* Adjust size as needed */
+    z-index: 10; /* Ensure it stays on top of the image */
+}
+
+.product-card .card-body {
+    padding: 15px;
+    position: relative;
+}
+
+.product-card .card-title {
+    font-size: 1rem;
+    margin-bottom: 5px;
+}
+
+.product-card .card-text {
+    font-size: 0.9rem;
+    margin-bottom: 35px; /* Maintain space between price and cart icon */
+}
+
+.product-card .old-price {
+    text-decoration: line-through;
+    color: #ccc;
+    margin-right: 5px;
+}
+
+.product-card .price {
+    font-size: 1.2rem;
+    color: #FBD757;
+    display: block; /* Ensure price takes up the full width */
+}
+
+.product-card .cart-icon {
+    position: absolute;
+    bottom: 45px; /* Keep the cart icon higher */
+    right: 15px;
+    background-color: transparent;
+    border: 2px solid #FBD757;
+    border-radius: 50%;
+    padding: 10px;
+    color: #FBD757;
+    cursor: pointer;
+}
+
+/* Adjustments for smaller screens */
+@media (max-width: 576px) {
+    .product-card .card-text {
+        margin-bottom: 45px; /* Extra space to avoid overlap */
+    }
+
+    .product-card .cart-icon {
+        bottom: 60px; /* Further adjustment to prevent overlap on smaller screens */
+    }
+    
+}
+.hero-heading {
+    font-size: 3rem;
+    font-weight: bold;
+    background: linear-gradient(to right, #FBD757    , #ffffff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 300;
+}
+@media (max-width: 576px) {
+    .hero-heading{
+        font-size: 2rem;
+    }
+}
+
+
+
+.dropdown-menu {
+    min-width: 200px; /* Adjust the width of the dropdown if needed */
+    border: 2px solid #f7f2f2;
+    border-radius: 0px;
+    color: #000;
+}
+
+.dropdown-item {
+    cursor: pointer;
+   
+}
+.dropdown-toggle{
+    border: 2px solid #f7f2f2;
+    border-radius: 0px;
+    background-color: transparent;
+}
+.dropdown-toggle:active{
+    background-color: transparent;
+}
+.pagination .page-item .page-link {
+            color: #ffffff; /* Text color */
+            background-color: #FBD757; /* Background color */
+            border-color: #FBD757; /* Border color */
+        }
+
+        .pagination .page-item.active .page-link {
+            background-color: #e6b800; /* Background color for the active page */
+            border-color: #2b0000; /* Border color for the active page */
+            color: #ffffff; /* Text color for the active page */
+        }
+
+        .pagination .page-item:hover .page-link {
+            background-color: #2b0000; /* Background color on hover */
+            border-color: #e6b800; /* Border color on hover */
+            color: #ffffff; /* Text color on hover */
+        }
+
+        .pagination .page-item.disabled .page-link {
+            color: #999999; /* Disabled text color */
+            background-color: #f5f5f5; /* Disabled background color */
+            border-color: #dddddd; /* Disabled border color */
+        }
+</style>
+<body>
+    
+
+
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: #f7f2f2;">
+        <a class="navbar-brand" href="/">
+            <img src="{% static 'images/vasora 1.png' %}" alt="Logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'about_us' %}">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'products' %}">Products</a>
+                </li>
+                <!-- Our Category Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="categoryDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Our Category
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="categoryDropdown">
+                        {% for category in categories %}
+                            <li><a class="dropdown-item" href="{% url 'category_products' category.id %}">{{ category.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'contact_us' %}">Contact Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link search-icon" href="#"><i class="fas fa-search"></i></a>
+                </li>
+                <!-- Profile Icon Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-user"></i>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+                        {% if user.is_authenticated %}
+                        <li><a class="dropdown-item" href="{% url 'user_orders' %}">Orders</a></li>
+                        <li><a class="dropdown-item" href="{% url 'wishlist' %}">wishlist</a></li>
+                            <li><a class="dropdown-item" href="{% url 'logout_view' %}">Logout</a></li>
+                        {% else %}
+                            <li><a class="dropdown-item" href="{% url 'login' %}">Login</a></li>
+                            <li><a class="dropdown-item" href="{% url 'signup' %}">Sign Up</a></li>
+                        {% endif %}
+                    </ul>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'cart' %}"><i class="fas fa-shopping-cart"></i></a>
+                </li>
+            </ul>
+            <form class="form-inline search-bar d-none ml-auto" action="{% url 'search_results' %}" method="GET">
+                <input class="form-control" name="q" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-secondary" type="submit"><i class="fas fa-search"></i></button>
+                <button class="btn btn-outline-secondary close-search" type="button"><i class="fas fa-times"></i></button>
+            </form>
+        </div>
+    </nav>
+    
+    <div class="container" style="margin-top: 120px;">
+        <div class="row mt-5">
+            <div class="col-md-6">
+                <h1 class="hero-heading">Our Products</h1>
+            </div>
+            <div class="col-md-6 text-end">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                        Sort Products
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <li><a class="dropdown-item" href="?sort=low-to-high">Price: Low to High</a></li>
+                        <li><a class="dropdown-item" href="?sort=high-to-low">Price: High to Low</a></li>
+                        <li><a class="dropdown-item" href="?sort=a-to-z">Name: A to Z</a></li>
+                        <li><a class="dropdown-item" href="?sort=z-to-a">Name: Z to A</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            {% for product in page_obj %}
+            <div class="col-lg-3 col-md-6 col-sm-6 col-6 mb-4">
+                <div class="card product-card" data-id="{{ product.id }}">
+                    <div class="image-container" style="position: relative;">
+                        <a href="{% url 'product_details' product.slug %}" >
+                        {% if product.images.first %}
+                            <img src="{{ product.images.first.image.url }}" class="card-img-top" alt="{{ product.heading }}">
+                        {% else %}
+                            <p>No Image</p>
+                        {% endif %}
+                    </a>
+                    <div class="wishlist-icon">
+                        <a href="{% url 'add_to_wishlist' product.id %}" style="color: #FBD757;">
+                            <i class="fas fa-heart"></i>
+                        </a>
+                    </div>
+                    </div>
+                    <div class="card-body">
+                        <a href="{% url 'product_details' product.slug %}" style="color: #ffffff;text-decoration: none;">
+                        <h5 class="card-title">{{ product.heading }}</h5>
+                        </a>
+                        <p class="card-text">
+                            {% if product.discount_price %}
+                                <span class="old-price">₹{{ product.original_price }}</span>
+                                <span class="price">₹{{ product.discount_price }}</span>
+                            {% else %}
+                                <span class="price">₹{{ product.original_price }}</span>
+                            {% endif %}
+                        </p>
+                        {% if product.stock > 0 %}
+                        <div class="cart-icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                    {% endif %}
+                    
+                        
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    
+        <!-- Pagination Controls -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                        {% endif %}
+    
+                        {% for num in page_obj.paginator.page_range %}
+                            {% if page_obj.number == num %}
+                                <li class="page-item active">
+                                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                                </li>
+                            {% else %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+    
+                        {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+    
+    
+    
+    <footer class="footer-section mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 pt-5 footer-logo">
+                    <img src="{% static 'images/footer.png' %}" alt="Logo">
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-3 pt-5 footer-links">
+                        <div class="links">
+                            <a href="/">Home</a>
+                            <a href="#">About us</a>
+                            <a href="{% url 'products' %}">Products</a>
+                            <a href="{% url 'contact_us' %}">Contact Us</a>
+                            <a href="{% url 'trending_products' %}">Trending Products</a>
+                            <a href="{% url 'terms_and_condition' %}">Terms and Condition</a>
+                        </div>
+                        
+                    </div>
+                    <div class="col-md-3 pt-5 footer-links">
+                        <div class="links">
+                            {% for category in categories %}
+                                <a href="{% url 'category_products' category.id %}">{{ category.name }}</a>
+                            {% endfor %}
+                        </div>
+                        
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                © 2024 Vasora Jewellers by Shop
+            </div>
+        </div>
+    </footer>
+    
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+    $('.search-icon').click(function() {
+        $('.navbar-nav').addClass('d-none');  // Hide the navbar links
+        $('.search-bar').removeClass('d-none');  // Show the search bar
+    });
+
+    $('.close-search').click(function() {
+        $('.search-bar').addClass('d-none');  // Hide the search bar
+        $('.navbar-nav').removeClass('d-none');  // Show the navbar links
+    });
+});
+$(document).ready(function() {
+    $('.cart-icon').on('click', function(e) {
+        e.preventDefault(); // Prevent the default anchor behavior
+
+        var product_id = $(this).closest('.card').data('id');  // Assuming you set a data-id attribute on the card
+        var url = `/add_to_cart/${product_id}/`;  // Construct the URL with the product_id
+
+        $.ajax({
+            url: url,
+            method: 'POST',
+            data: {
+                'quantity': 1,  // Default quantity is 1
+                'csrfmiddlewaretoken': '{{ csrf_token }}'
+            },
+            success: function(response) {
+                // Since the view function might redirect, detect the URL change and follow it
+                window.location.href = "/cart/"; // Redirect to cart page after adding the product
+            },
+            error: function(xhr, status, error) {
+                // Handle the error case here
+                alert('Failed to add product to cart.');
+            }
+        });
+    });
+});
+
+
+
+    </script>
+</body>
+</html>

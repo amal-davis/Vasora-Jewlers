@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <link rel="stylesheet" href="{% static 'images/index.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Post+No+Bills+Colombo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap');
+
+        body {
+            background: linear-gradient(to left, #2b0000, #0f0000);
+            font-family: "Poppins", sans-serif;
+            padding-top: 70px; /* Adjust this value based on the actual height of your navbar */
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding-top: 90px; /* Adjust this value based on the actual height of your navbar on mobile */
+            }
+        }
+
+      
+
+        .about-us-section h2 {
+            font-size: 3rem;
+    font-weight: bold;
+    background: linear-gradient(to right, #FBD757    , #ffffff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 300;
+        }
+
+        .values {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            
+        }
+
+        .value-item {
+    position: relative;
+    padding-top: 20px;
+}
+
+.value-item.up {
+    transform: translateY(-50px);
+}
+
+.value-item.down {
+    transform: translateY(50px);
+}
+
+.value-item i {
+    font-size: 2.5rem;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.value-item h4 {
+    color: white;
+    margin-bottom: 15px;
+}
+
+.value-item p {
+    color: white;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+    .value-item.up, .value-item.down {
+        transform: none;
+    }
+}
+
+
+        @media (max-width: 992px) {
+            .value-item {
+                flex: 0 0 48%;
+                max-width: 48%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .value-item {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+        }
+        .hero-section {
+    background-image: url("{% static 'images/hero_images.png' %}");
+    background-size: cover;
+    background-position: center;
+    height: 50vh;
+    position: relative;
+}
+.hero-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3); /* Dark overlay */
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    color: white;
+}
+
+.hero-heading {
+    font-size: 3rem;
+    font-weight: bold;
+    background: linear-gradient(to right, #FBD757    , #ffffff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 300;
+}
+
+.btn-outline-light {
+    border-color: white;
+    color: white;
+    padding: 10px 20px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-outline-light:hover {
+    background-color: white;
+    color: black;
+}
+
+@media (max-width: 768px) {
+    .hero-heading {
+        font-size: 2rem;
+    }
+}
+.about-us-section i{
+    color: #FBD757;
+}
+
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: rgb(247, 242, 242);">
+        <a class="navbar-brand" href="/">
+            <img src="{% static 'images/vasora 1.png' %}" alt="Logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'about_us' %}">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'products' %}">Products</a>
+                </li>
+                <!-- Our Category Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="categoryDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Our Category
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="categoryDropdown">
+                        {% for category in categories %}
+                            <li><a class="dropdown-item" href="{% url 'category_products' category.id %}">{{ category.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'contact_us' %}">Contact Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link search-icon" href="#"><i class="fas fa-search"></i></a>
+                </li>
+                <!-- Profile Icon Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-user"></i>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+                        {% if user.is_authenticated %}
+                        <li><a class="dropdown-item" href="{% url 'user_orders' %}">Orders</a></li>
+                        <li><a class="dropdown-item" href="{% url 'wishlist' %}">wishlist</a></li>
+                            <li><a class="dropdown-item" href="{% url 'logout_view' %}">Logout</a></li>
+                        {% else %}
+                            <li><a class="dropdown-item" href="{% url 'login' %}">Login</a></li>
+                            <li><a class="dropdown-item" href="{% url 'signup' %}">Sign Up</a></li>
+                        {% endif %}
+                    </ul>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'cart' %}"><i class="fas fa-shopping-cart"></i></a>
+                </li>
+            </ul>
+            <form class="form-inline search-bar d-none ml-auto" action="{% url 'search_results' %}" method="GET">
+                <input class="form-control" name="q" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-secondary" type="submit"><i class="fas fa-search"></i></button>
+                <button class="btn btn-outline-secondary close-search" type="button"><i class="fas fa-times"></i></button>
+            </form>
+            
+        </div>
+    </nav>
+    
+    <div class="container py-5" style="margin-top: 120px;">
+        <section class="about-us-section">
+            <h2>About Us</h2>
+            <div class="row values mt-5">
+                <div class="col-lg-3 col-md-6 col-sm-12 value-item down">
+                    <i class="fas fa-balance-scale"></i>
+                    <h4>OUR VALUES</h4>
+                    <p>To maintain highest degree of transparency, honesty and business ethics at all levels. To motivate personnel and create an atmosphere that is conducive to employee's growth and personal development. To be a responsible corporate citizen with sensitivity towards the society and environment, in all actions.</p>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-12 value-item up">
+                    <i class="fas fa-hand-holding-heart"></i>
+                    <h4>FAITH</h4>
+                    <p>We will always approach every decision and action with absolute and unwavering faith. Infused with faith, our work environment, processes and output will be aimed at building abiding trust amongst customers, employees, bankers, suppliers, well-wishers and all belonging to our larger ecosystem.</p>
+                    <br><br><i class="fas fa-hammer"></i>
+
+                    <h4>INNOVATION</h4>
+                    <p>We will always approach every decision and action with absolute and unwavering faith. Infused with faith, our work environment, processes and output will be aimed at building abiding trust amongst customers, employees, bankers, suppliers, well-wishers and all belonging to our larger ecosystem.</p>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-12 value-item down">
+                    <i class="fas fa-users"></i>
+                    <h4>TOGETHERNESS</h4>
+                    <p>Across all levels and functions, we will always strive to work in an environment of togetherness and equality. We take pride in creating an environment where everyone is part of a family; not just employees but their families form a part of this integrated culture. We’re driven as a family with one common purpose to achieve the highest standards of offerings, service and commitment.</p>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-12 value-item up">
+                    <i class="fas fa-tasks"></i>
+                    <h4>APTITUDE</h4>
+                    <p>we create an environment that promotes aptitude for work and creates a natural inclination towards devotion to one’s duty. We believe that aptitude for excellence in work is not a gift but a result of the positive energy and approach towards work that is inculcated and sustained through right practices and belief systems.</p>
+                    <br><br><i class="fas fa-lightbulb"></i>
+
+                    <h4>HARDWORK</h4>
+                    <p>we believe persistent hardwork is the key to success in all we do. Our dedication to working hard, every day, helps us cross milestones consistently and enables us to keep setting higher standards for ourselves. It has been our way of growth over these years.</p>
+                
+                </div>
+            </div>
+        </section>
+    </div>
+    <section class="hero-section d-flex align-items-center justify-content-center text-center">
+        <div class="hero-content">
+            <h1 class="hero-heading">Trending Products</h1>
+            <a href="{% url 'trending_products' %}" class="btn btn-outline-light mt-3">DISCOVER NOW</a>
+        </div>
+    </section>
+   
+    <footer class="footer-section mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 pt-5 footer-logo">
+                    <img src="{% static 'images/footer.png' %}" alt="Logo">
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-3 pt-5 footer-links">
+                        <div class="links">
+                            <a href="/">Home</a>
+                            <a href="#">About us</a>
+                            <a href="{% url 'products' %}">Products</a>
+                            <a href="{% url 'contact_us' %}">Contact Us</a>
+                            <a href="{% url 'trending_products' %}">Trending Products</a>
+                            <a href="{% url 'terms_and_condition' %}">Terms and Condition</a>
+                        </div>
+                        
+                    </div>
+                    <div class="col-md-3 pt-5 footer-links">
+                        <div class="links">
+                            {% for category in categories %}
+                                <a href="{% url 'category_products' category.id %}">{{ category.name }}</a>
+                            {% endfor %}
+                        </div>
+                        
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                © 2024 Vasora Jewellers by Shop
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.search-icon').click(function() {
+                $('.navbar-nav').addClass('d-none');  // Hide the navbar links
+                $('.search-bar').removeClass('d-none');  // Show the search bar
+            });
+
+            $('.close-search').click(function() {
+                $('.search-bar').addClass('d-none');  // Hide the search bar
+                $('.navbar-nav').removeClass('d-none');  // Show the navbar links
+            });
+        });
+
+       
+    </script>
+</body>
+</html>

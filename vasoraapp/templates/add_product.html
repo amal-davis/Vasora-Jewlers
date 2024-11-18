@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Products</title>
+    <link rel="stylesheet" href="{% static 'images/index.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Post+No+Bills+Colombo:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="{% static 'images/small_logo.png' %}">
+
+</head>
+<body>
+    
+
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: rgb(247, 242, 242);">
+        <a class="navbar-brand" href="/">
+            <img src="{% static 'images/vasora 1.png' %}" alt="Logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'about_us' %}">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'products' %}">Products</a>
+                </li>
+                <!-- Our Category Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="categoryDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Our Category
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="categoryDropdown">
+                        {% for category in categories %}
+                            <li><a class="dropdown-item" href="{% url 'category_products' category.id %}">{{ category.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'contact_us' %}">Contact Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link search-icon" href="#"><i class="fas fa-search"></i></a>
+                </li>
+                <!-- Profile Icon Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-user"></i>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+                        {% if user.is_authenticated %}
+                        <li><a class="dropdown-item" href="{% url 'user_orders' %}">Orders</a></li>
+                        <li><a class="dropdown-item" href="{% url 'wishlist' %}">wishlist</a></li>
+                            <li><a class="dropdown-item" href="{% url 'logout_view' %}">Logout</a></li>
+                        {% else %}
+                            <li><a class="dropdown-item" href="{% url 'login' %}">Login</a></li>
+                            <li><a class="dropdown-item" href="{% url 'signup' %}">Sign Up</a></li>
+                        {% endif %}
+                    </ul>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'cart' %}"><i class="fas fa-shopping-cart"></i></a>
+                </li>
+            </ul>
+            <form class="form-inline search-bar d-none ml-auto" action="{% url 'search_results' %}" method="GET">
+                <input class="form-control" name="q" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-secondary" type="submit"><i class="fas fa-search"></i></button>
+                <button class="btn btn-outline-secondary close-search" type="button"><i class="fas fa-times"></i></button>
+            </form>
+        </div>
+    </nav>
+
+
+
+
+
+    <div class="container" style="margin-top: 140px;">
+        <div class="heading mb-5">
+            <h3 class="text-center">Add Products</h3>
+        </div>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+           
+    
+            <label for="id_category">Category:</label>
+            <select name="category" id="id_category" required class="form-control" style="width: 60%;">
+                <option value="select the categories">Select the categories</option>
+                {% for category in categories %}
+                    <option value="{{ category.id }}" >{{ category.name }}</option>
+                {% endfor %}
+            </select><br><br>
+    
+            <label for="heading">Heading:</label>
+            <input type="text" name="heading" required class="form-control" style="width: 60%;"><br><br>
+    
+           
+    
+            <label for="description">Description:</label><br>
+            <textarea name="description" required class="form-control" id="editor" style="width: 60%;"></textarea><br><br>
+
+          
+            <label for="original_price">Original Price:</label>
+            <input type="number" name="original_price" step="0.01" required class="form-control" style="width: 60%;"><br><br>
+    
+            <label for="discount_price">Discount Price:</label>
+            <input type="number" name="discount_price" step="0.01" class="form-control" style="width: 60%;"><br><br>
+            <label for="delivery_charge">Delivery Charge:</label>
+            <input type="number" step="0.01" id="delivery_charge" name="delivery_charge" value="0.00" class="form-control" style="width: 60%;"><br><br>
+            <label for="stock">Stock:</label>
+            <input type="number" name="stock" id="stock" class="form-control" style="width: 60%;"><br><br>
+    
+    
+            <label for="images">Images:</label>
+            <input type="file" name="images" multiple required class="form-control" style="width: 60%;"><br><br>
+    
+            <button type="submit" style="background-color: #0e0b01; color: #fff;" class="btn">Add Product</button>
+        </form>
+        
+    </div>
+
+    <div class="link-section text-center">
+        <a href="{% url 'admin_page' %}" style="color: #0e0b01;">GO BACK</a>
+            </div>
+            <div class="container-fluid mt-5">
+                {% if page_obj %}
+                <h2 class="text-center">Added Products</h2>
+                <table class="table mt-5">
+                    <thead class="thead">
+                        <tr>
+                            <th>Category</th>
+                            <th>Heading</th>
+                            <th>Description</th>
+                            <th>Original Price</th>
+                            <th>Discount Price</th>
+                            <th>Images</th>
+                            <th>Status</th>
+                            <th>Stock</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="tbody">
+                        {% for product in page_obj %}
+                            <tr>
+                                <td>{{ product.category.name }}</td>
+                                <td>{{ product.heading }}</td>
+                                <td>{{ product.description|safe }}</td>
+                                <td>₹{{ product.original_price }}</td>
+                                <td>₹{{ product.discount_price }}</td>
+                                <td>
+                                    {% if product.images.all %}
+                                    {% for image in product.images.all %}
+                                        <img src="{{ image.image.url }}" alt="{{ product.heading }}" style="width: 50px; height: 50px;">
+                                    {% endfor %}
+                                {% else %}
+                                    <div class="no-image" style="width: 50px; height: 50px; text-align: center; padding: 10px; background-color: #f8f8f8; border: 1px solid #ddd;">
+                                        No Image
+                                    </div>
+                                {% endif %}
+                                
+                                </td>
+                                <td>{{ product.get_stock_status }}</td>
+                                <td>{{ product.stock }}</td>
+                                <td>
+                                    <a href="{% url 'p_delete_form' product.id %}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this Product?');">Delete</a>
+                                    <a href="{% url 'edit_product' product.id %}" class="btn btn-outline-dark ">Edit</a>        
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            
+                <!-- Pagination Controls -->
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page=1" aria-label="First">
+                                    <span aria-hidden="true">&laquo;&laquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                        {% endif %}
+            
+                        {% for num in page_obj.paginator.page_range %}
+                            {% if page_obj.number == num %}
+                                <li class="page-item active"><a class="page-link" href="#">{{ num }}</a></li>
+                            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                                <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+            
+                        {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Last">
+                                    <span aria-hidden="true">&raquo;&raquo;</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                {% endif %}
+            </div>
+            
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.ckeditor.com/4.19.1/standard/ckeditor.js"></script>
+
+    <script>
+            CKEDITOR.replace('editor');
+
+            $(document).ready(function() {
+    $('.search-icon').click(function() {
+        $('.navbar-nav').addClass('d-none');  // Hide the navbar links
+        $('.search-bar').removeClass('d-none');  // Show the search bar
+    });
+
+    $('.close-search').click(function() {
+        $('.search-bar').addClass('d-none');  // Hide the search bar
+        $('.navbar-nav').removeClass('d-none');  // Show the navbar links
+    });
+});
+    </script>
+</body>
+</html>

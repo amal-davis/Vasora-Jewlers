@@ -1,0 +1,181 @@
+.navbar-brand img {
+    width: 100px; /* Increase the width of the logo */
+    margin-left: 100px;
+}
+
+.navbar-nav {
+    width: 100%;
+    display: flex;
+    justify-content: center; /* Center the nav links horizontally */
+    flex-wrap: wrap; /* Allow items to wrap if needed */
+}
+
+.navbar-nav .nav-item {
+    margin: 0 15px; /* Add margin between nav items */
+}
+
+.navbar-nav .nav-item .nav-link {
+    font-weight: bold;
+    color: #5e3b3b;
+    font-size: 16px;
+}
+/* Ensure that all borders and outlines are removed */
+.navbar-toggler {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background-color: transparent !important;
+}
+
+.navbar-toggler:focus,
+.navbar-toggler:active {
+    outline: none !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+/* Remove default styling of the toggler icon */
+.navbar-toggler-icon {
+    background-image: none !important;
+    background-color: transparent !important; /* Optional: Make the icon background transparent */
+}
+
+/* Optional: If you want to completely customize the toggle icon */
+.navbar-toggler-icon::before {
+    content: '\f0c9'; /* FontAwesome icon code for bars */
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    color: #000; /* Change icon color */
+    font-size: 1.5rem;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .navbar-nav {
+        flex-direction: column; /* Stack items vertically on small screens */
+        align-items: center; /* Center items horizontally */
+    }
+
+    .navbar-brand img {
+        width: 80px; /* Adjust logo width for small screens */
+        margin-right: 0;
+    }
+
+    .navbar-nav .nav-item {
+        margin: 10px 0; /* Adjust spacing for vertical stacking */
+    }
+
+    .navbar-nav .nav-item .nav-link {
+        padding: 10px 20px; /* Adjust gaps for small screens */
+    }
+}
+
+@media (min-width: 769px) and (max-width: 992px) {
+    .navbar-brand img {
+        width: 90px; /* Adjust logo width for medium screens */
+        margin-right: 100px;
+    }
+
+    .navbar-nav .nav-item .nav-link {
+        padding: 10px 20px; /* Adjust gaps for medium screens */
+    }
+}
+
+@media (min-width: 993px) {
+    .navbar-brand img {
+        width: 100px; /* Default logo width for large screens */
+        margin-right: 200px;
+    }
+
+    .navbar-nav .nav-item .nav-link {
+        padding: 10px 30px; /* Default gaps for large screens */
+    }
+}
+
+/* Search bar styling */
+.search-bar {
+    display: flex;
+    align-items: center;
+}
+
+.search-bar .form-control {
+    width: 250px;
+}
+
+.search-bar .btn-outline-secondary {
+    margin-left: 10px;
+}
+
+/* Hide the search input initially */
+.d-none {
+    display: none !important;
+}
+
+/* Dropdown on hover */
+.nav-item.dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0; /* Adjust this to align the dropdown menu correctly */
+}
+
+.nav-item.dropdown:hover .dropdown-toggle::after {
+    transform: rotate(180deg); /* Optional: Rotate the caret when dropdown is active */
+}
+
+/* Optional: Adjust dropdown menu positioning for smooth hover */
+.dropdown-menu {
+    display: none; /* Hide dropdown menu initially */
+    position: absolute;
+    will-change: transform;
+}
+
+
+
+
+
+
+
+
+
+
+
+.footer-section {
+    color: #fff;
+    padding: 40px 0;
+}
+.footer-section .footer-logo {
+    text-align: left;
+    margin-bottom: 20px;
+}
+.footer-section .footer-logo img {
+    max-width: 150px;
+}
+.footer-section .footer-links {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.footer-section .footer-links .col {
+    margin-bottom: 20px;
+}
+.footer-section .footer-links a {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    margin: 5px 0;
+}
+.footer-section .footer-social {
+    text-align: left;
+    margin-top: 20px;
+}
+.footer-section .footer-social a {
+    color: #fff;
+    margin: 0 10px;
+    font-size: 1.5rem;
+}
+.footer-section .footer-bottom {
+    text-align: center;
+    margin-top: 20px;
+    border-top: 1px solid #444;
+    padding-top: 10px;
+    font-size: 0.9rem;
+}
